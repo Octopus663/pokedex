@@ -1,10 +1,14 @@
 import { useParams, Link } from 'react-router-dom';
 import { usePokemon } from '../features/pokemons/hooks/usePokemon';
+import { useFavoritesStore } from '../features/pokemons/store/useFavoritesStore';
+
 
 export const PokemonPage = () => {
   const { name } = useParams<{ name: string }>(); 
   
   const { data: pokemon, isLoading, isError } = usePokemon(name);
+  const { toggleFavorite, isFavorite } = useFavoritesStore();
+  const fav = isFavorite(pokemon?.name ?? '');
 
   if (isLoading) return <h2 style={{ textAlign: 'center' }}>Шукаємо покемона...</h2>;
   if (isError) return <h2 style={{ textAlign: 'center', color: 'red' }}>Покемон втік!</h2>;
@@ -15,6 +19,20 @@ export const PokemonPage = () => {
       <Link to="/" style={{ display: 'block', marginBottom: '20px', color: 'blue', textDecoration: 'none' }}>
         Повернутися до списку
       </Link>
+
+      <button 
+        onClick={() => toggleFavorite(pokemon.name)}
+        style={{ 
+          padding: '10px', 
+          fontSize: '20px', 
+          cursor: 'pointer',
+          background: fav ? '#ffd700' : '#eee',
+          border: '1px solid #ccc',
+          borderRadius: '5px'
+        }}
+      >
+        {fav ? 'В обраному' : 'Додати в обране'}
+      </button>
       
       <h1 style={{ textTransform: 'capitalize', fontSize: '32px' }}>{pokemon.name}</h1>
       
@@ -37,5 +55,6 @@ export const PokemonPage = () => {
         </ul>
       </div>
     </div>
+    
   );
 };
