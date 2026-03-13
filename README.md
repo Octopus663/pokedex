@@ -1,73 +1,52 @@
-# React + TypeScript + Vite
+# High-Performance PokeAPI Explorer
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern, scalable web application built with **React 19**, **TypeScript**, and **TanStack Query**. This project serves as a comprehensive demonstration of modular architecture, advanced state management, and utility-first styling using **Tailwind CSS v4**.
 
-Currently, two official plugins are available:
+## Technical Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+* **Framework**: [React 19](https://react.dev/) (Functional Components, Hooks)
+* **Server State**: [TanStack Query (React Query) v5](https://tanstack.com/query/latest) — implementing sophisticated caching and data synchronization.
+* **Global State**: [Zustand](https://zustand-demo.pmnd.rs/) — lightweight state management with middleware-based persistence.
+* **Styling**: [Tailwind CSS v4](https://tailwindcss.com/) — utilizing the latest PostCSS-integrated engine for rapid UI development.
+* **Routing**: [React Router v6](https://reactrouter.com/) — dynamic route matching and navigation.
+* **Data Fetching**: [Axios](https://axios-http.com/) — centralized API client with type-safe response handling.
 
-## React Compiler
+## Architectural Pattern
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+The project follows a **Feature-Based (Modular) Architecture** to ensure high maintainability and horizontal scalability:
 
-## Expanding the ESLint configuration
+* **/src/features**: Encapsulated domain logic. Each feature (e.g., `pokemons`) contains its own API services, components, hooks, and store.
+* **/src/pages**: Composition layer that assembles features into full-page views.
+* **/src/app**: Global configuration, providers, and application-wide routing setup.
+* **/src/components**: Reusable UI primitives and shared presentational components.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Key Features
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+* **Asynchronous Data Management**: Automated loading/error states and intelligent caching using TanStack Query.
+* **Persistent Global State**: Favorites system implemented via Zustand with `persist` middleware for LocalStorage synchronization.
+* **Dynamic Pagination**: Optimized offset-based navigation with background data prefetching.
+* **Interactive UI**: Responsive grid layouts, state-driven progress bars for stats visualization, and smooth transitions.
+* **Strict Type Safety**: End-to-end TypeScript implementation for API responses, store schemas, and component props.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## Installation and Deployment
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+### Prerequisites
+* Node.js (LTS version)
+* npm or yarn
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### Setup
+1. Clone the repository.
+2. Install dependencies:
+   ```bash
+    npm install
+   ```
+3. Launch development server:
+    ```bash
+    npm run dev
+    ```
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### Production
+Build the optimized bundle:
+```bash
+    npm run build
 ```
